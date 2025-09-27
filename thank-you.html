@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Đăng ký thành công</title>
+  <link rel="stylesheet" href="styles.css"/>
+  <script>
+// --- Simple Pixel + GA bootstrap with localStorage config ---
+// Set once via /config.html and it persists on the domain.
+(function(){
+  const PIXEL_ID = localStorage.getItem('PIXEL_ID');
+  const GA_ID = localStorage.getItem('GA_ID');
+
+  // Meta Pixel
+  if (PIXEL_ID) {
+    !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+    n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+    document,'script','https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', PIXEL_ID);
+    fbq('track','PageView');
+    window.__fbqReady = true;
+  }
+
+  // GA4
+  if (GA_ID) {
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.googletagmanager.com/gtag/js?id='+GA_ID,'ga_g');
+    window.dataLayer=window.dataLayer||[];
+    function gtag(){dataLayer.push(arguments);}
+    window.gtag = gtag;
+    gtag('js', new Date());
+    gtag('config', GA_ID);
+    window.__gaReady = true;
+  }
+})();
+</script>
+</head>
+<body>
+  <div class="container">
+    <div class="card" style="text-align:center">
+      <h2>🎉 Chúc mừng <span id="n"></span> đã đăng ký thành công!</h2>
+      <p class="lead">Bấm vào nút bên dưới để vào nhóm <b>Zalo</b> nhận tài liệu & link Zoom học.</p>
+
+      <a class="btn" id="zaloBtn" href="https://zalo.me" target="_blank" rel="noopener" style="margin:12px 0 6px;">
+        👉 VÀO NHÓM ZALO
+      </a>
+
+      <div style="margin-top:12px">
+        <p class="lead" style="font-size:15px">Hoặc quét QR:</p>
+        <img src="zalo-qr.png" alt="QR Zalo" style="width:170px;border-radius:12px">
+      </div>
+
+      <div style="margin-top:18px"><a class="btn alt" href="index.html">Về trang chủ</a></div>
+    </div>
+  </div>
+<script>
+  const q = new URLSearchParams(location.search);
+  document.getElementById('n').textContent = q.get('name') || 'anh/chị';
+
+  // Pixel CompleteRegistration
+  try { if (window.__fbqReady && window.fbq) fbq('track','CompleteRegistration'); } catch(e){}
+  // GA4 conversion
+  try { if (window.__gaReady && window.gtag) gtag('event','generate_lead',{value:0,currency:'VND'}); } catch(e){}
+
+  // Track click join Zalo
+  document.getElementById('zaloBtn').addEventListener('click', function(){
+    try { if (window.__gaReady && window.gtag) gtag('event','join_zalo',{location:'thank_you'}); } catch(e){}
+    try { if (window.__fbqReady && window.fbq) fbq('trackCustom','JoinZalo'); } catch(e){}
+  });
+
+  // Auto open after 2.5s (still keeps button)
+  setTimeout(function(){
+    document.getElementById('zaloBtn').click();
+  }, 2500);
+</script>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Cấu hình Pixel & GA</title>
+  <link rel="stylesheet" href="styles.css"/>
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <h2 class="h1">Cấu hình Meta Pixel & Google Analytics 4</h2>
+      <p class="lead">Nhập <b>Pixel ID</b> và <b>GA4 Measurement ID</b> của anh, bấm Lưu. Thông tin được lưu trong <code>localStorage</code> của trình duyệt và áp dụng cho toàn site.</p>
+      <label>Meta Pixel ID <input class="input" id="pixel" placeholder="vd: 123456789012345"></label>
+      <label>GA4 Measurement ID <input class="input" id="ga" placeholder="vd: G-XXXXXXX"></label>
+      <div style="margin-top:10px;display:flex;gap:8px">
+        <button class="btn" id="save">Lưu</button>
+        <a class="btn alt" href="index.html">Về trang</a>
+      </div>
+      <p id="msg" class="lead" style="margin-top:10px"></p>
+    </div>
+  </div>
+<script>
+  document.getElementById('pixel').value = localStorage.getItem('PIXEL_ID')||'';
+  document.getElementById('ga').value = localStorage.getItem('GA_ID')||'';
+  document.getElementById('save').addEventListener('click', function(){
+    localStorage.setItem('PIXEL_ID', document.getElementById('pixel').value.trim());
+    localStorage.setItem('GA_ID', document.getElementById('ga').value.trim());
+    document.getElementById('msg').textContent = 'Đã lưu! Mở lại trang để áp dụng.';
+  });
+</script>
+</body>
+</html>
